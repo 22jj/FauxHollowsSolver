@@ -49,6 +49,8 @@ namespace FauxHollowsSolver
         private readonly Tile[] GameState = new Tile[36];
         private readonly PerfectFauxHollows PerfectFauxHollows = new();
 
+        private readonly FoxLocationFinder foxLocationFinder = new();
+
         private void FrameworPuzzlePoll(Framework framework)
         {
             try
@@ -91,6 +93,9 @@ namespace FauxHollowsSolver
                 if (!GameState.Contains(Tile.Blocked))
                     return;
 
+
+                var possibleFoxLocations = foxLocationFinder.getFoxLocations(GameState);
+
                 var solution = PerfectFauxHollows.Solve(GameState);
                 var solnMaxValue = solution.Where(s => s < 16).Max();
                 if (solnMaxValue <= 1)
@@ -102,14 +107,29 @@ namespace FauxHollowsSolver
                     var tileButton = GetTileButton(addon, i);
                     var tileBackgroundImage = GetBackgroundImageNode(tileButton);
 
-                    if (soln == PerfectFauxHollows.ConfirmedSword ||
+                    if ((soln == PerfectFauxHollows.ConfirmedSword ||
                         soln == PerfectFauxHollows.ConfirmedBox ||
                         soln == PerfectFauxHollows.ConfirmedChest ||
-                        soln == solnMaxValue)
+                        soln == solnMaxValue) && possibleFoxLocations[i] == 0)
                     {
                         tileBackgroundImage->AtkResNode.AddRed = 32;
                         tileBackgroundImage->AtkResNode.AddGreen = 143;
                         tileBackgroundImage->AtkResNode.AddBlue = 46;
+                    }
+                    else if ((soln == PerfectFauxHollows.ConfirmedSword ||
+                        soln == PerfectFauxHollows.ConfirmedBox ||
+                        soln == PerfectFauxHollows.ConfirmedChest ||
+                        soln == solnMaxValue) && possibleFoxLocations[i] > 0)
+                    {
+                        tileBackgroundImage->AtkResNode.AddRed = 166;
+                        tileBackgroundImage->AtkResNode.AddGreen = 166;
+                        tileBackgroundImage->AtkResNode.AddBlue = 166;
+                    }
+                    else if (possibleFoxLocations[i] > 0)
+                    {
+                        tileBackgroundImage->AtkResNode.AddRed = 143;
+                        tileBackgroundImage->AtkResNode.AddGreen = 32;
+                        tileBackgroundImage->AtkResNode.AddBlue = 121;
                     }
                     else
                     {
@@ -118,6 +138,8 @@ namespace FauxHollowsSolver
                         tileBackgroundImage->AtkResNode.AddBlue = 0;
                     }
                 }
+
+
             }
         }
 
