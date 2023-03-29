@@ -93,10 +93,10 @@ namespace FauxHollowsSolver
                 if (!GameState.Contains(Tile.Blocked))
                     return;
 
-
-                var possibleFoxLocations = foxLocationFinder.getFoxLocations(GameState);
-
                 var solution = PerfectFauxHollows.Solve(GameState);
+                var possibleFoxLocations = foxLocationFinder.getFoxLocations(GameState, solution);
+
+                
                 var solnMaxValue = solution.Where(s => s < 16).Max();
                 if (solnMaxValue <= 1)
                     solnMaxValue = -1;
@@ -112,24 +112,24 @@ namespace FauxHollowsSolver
                         soln == PerfectFauxHollows.ConfirmedChest ||
                         soln == solnMaxValue) && possibleFoxLocations[i] == 0)
                     {
-                        tileBackgroundImage->AtkResNode.AddRed = 32;
-                        tileBackgroundImage->AtkResNode.AddGreen = 143;
-                        tileBackgroundImage->AtkResNode.AddBlue = 46;
+                        tileBackgroundImage->AtkResNode.AddRed = 15;
+                        tileBackgroundImage->AtkResNode.AddGreen = 70;
+                        tileBackgroundImage->AtkResNode.AddBlue = 20;
                     }
                     else if ((soln == PerfectFauxHollows.ConfirmedSword ||
                         soln == PerfectFauxHollows.ConfirmedBox ||
                         soln == PerfectFauxHollows.ConfirmedChest ||
                         soln == solnMaxValue) && possibleFoxLocations[i] > 0)
                     {
-                        tileBackgroundImage->AtkResNode.AddRed = 166;
-                        tileBackgroundImage->AtkResNode.AddGreen = 166;
-                        tileBackgroundImage->AtkResNode.AddBlue = 166;
+                        tileBackgroundImage->AtkResNode.AddRed = 80;
+                        tileBackgroundImage->AtkResNode.AddGreen = 80;
+                        tileBackgroundImage->AtkResNode.AddBlue = 80;
                     }
                     else if (possibleFoxLocations[i] > 0)
                     {
-                        tileBackgroundImage->AtkResNode.AddRed = 143;
-                        tileBackgroundImage->AtkResNode.AddGreen = 32;
-                        tileBackgroundImage->AtkResNode.AddBlue = 121;
+                        tileBackgroundImage->AtkResNode.AddRed = 70;
+                        tileBackgroundImage->AtkResNode.AddGreen = 15;
+                        tileBackgroundImage->AtkResNode.AddBlue = 20;
                     }
                     else
                     {
