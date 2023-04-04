@@ -123,14 +123,14 @@ namespace FauxHollowsSolver
                                 goto exit_loop;
                             }
                         }
-                        else if (tile == Tile.Swords || solution == PerfectFauxHollows.ConfirmedSword)
+                        else if (Tile.Swords.HasFlag(tile) || solution == PerfectFauxHollows.ConfirmedSword)
                         {
                             if (pattern[k, i, j] != 3)
                             {
                                 goto exit_loop;
                             }
                         }
-                        else if (tile == Tile.BoxChest || solution == PerfectFauxHollows.ConfirmedChest || solution == PerfectFauxHollows.ConfirmedBox)
+                        else if (Tile.BoxChest.HasFlag(tile) || solution == PerfectFauxHollows.ConfirmedChest || solution == PerfectFauxHollows.ConfirmedBox)
                         {
                             if (pattern[k, i, j] != 2)
                             {
